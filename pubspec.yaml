@@ -1,0 +1,35 @@
+name: flutter_template
+description: A new Flutter project.
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  after_layout: ^1.1.0
+  bot_toast: ^4.0.1
+  cached_network_image: ^3.1.0
+  cupertino_icons: ^1.0.2
+  dart_json_mapper:
+  equatable: ^2.0.3
+  fluro: ^2.0.3
+  flutter_bloc: ^7.0.1
+  flutter_svg: ^0.22.0
+  google_fonts: ^2.1.0
+  intl: ^0.17.0
+  lint: ^1.0.0
+  logging: ^1.0.1
+  shared_preferences: ^2.0.6
+  velocity_x: ^3.3.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  build_runner:
+
+flutter:
+
+  uses-material-design: true
