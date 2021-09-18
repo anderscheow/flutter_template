@@ -1,6 +1,6 @@
 import 'dart:async';
 
-enum AuthStatus { unknown, authenticated, unauthenticated }
+import 'package:flutter_template/src/constants/auth.dart';
 
 class AuthRepository {
   final _controller = StreamController<AuthStatus>();
@@ -16,6 +16,7 @@ class AuthRepository {
     required String username,
     required String password,
   }) async {
+    // Todo: Save to preference
     await Future.delayed(
       const Duration(milliseconds: 300),
           () => _controller.add(AuthStatus.authenticated),

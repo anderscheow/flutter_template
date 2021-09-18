@@ -1,9 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_template/my_app.dart';
 import 'package:logging/logging.dart';
 
-void main() {
+import 'src/app.dart';
+
+void main() async {
   Logger.root.level = Level.ALL;
   Logger.root.onRecord.listen((record) {
     if (kDebugMode) {

@@ -1,10 +1,7 @@
-import 'dart:math';
-
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_template/screen/splash/splash.dart';
 
-import '../my_app.dart';
+import '../app.dart';
 
 class Routes {
   static const splashRoute = "/";
@@ -18,7 +15,7 @@ class Routes {
       ..define(
         splashRoute,
         handler: Handler(
-          handlerFunc: (context, params) => const SplashPage(),
+          handlerFunc: (context, params) => Container(),
         ),
       )
       ..define(
