@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class SettingsRepository {
   final _themeModeController = StreamController<ThemeMode>();
 
-  Stream<ThemeMode> get status async* {
+  Stream<ThemeMode> get theme async* {
     // Todo: Preference check
     yield ThemeMode.system;
     yield* _themeModeController.stream;

@@ -13,7 +13,7 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
     required SettingsRepository settingsRepo,
   })  : _settingsRepo = settingsRepo,
         super(const ThemeState.system()) {
-    _themeSubscription = _settingsRepo.status.listen(
+    _themeSubscription = _settingsRepo.theme.listen(
       (status) => add(ThemeChanged(status)),
     );
   }
