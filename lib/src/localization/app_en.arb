@@ -1,6 +1,3 @@
 {
-  "appTitle": "flutter_template",
-  "@appTitle": {
-    "description": "The title of the application"
-  }
+  "helloWorld": "Hello World!"
 }

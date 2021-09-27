@@ -1,5 +1,6 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_template/src/screens/login/home.dart';
 
 import '../app.dart';
 
@@ -27,7 +28,7 @@ class Routes {
       ..define(
         loginRoute,
         handler: Handler(
-          handlerFunc: (context, params) => Container(),
+          handlerFunc: (context, params) => const LoginPage(),
         ),
       )
       ..notFoundHandler =

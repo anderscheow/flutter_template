@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_template/src/bloc/theme/theme_bloc.dart';
+import 'package:flutter_template/src/bloc/settings/settings_bloc.dart';
 import 'package:flutter_template/src/repository/settings/settings_repository.dart';
 import 'package:flutter_template/src/styles/theme.dart';
 
 import 'bloc/auth/auth_bloc.dart';
 import 'constants/auth.dart';
+import 'constants/language.dart';
 import 'repository/auth/auth_repository.dart';
 import 'route/routes.dart';
 
@@ -25,7 +26,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) => ThemeBloc(settingsRepo: settingsRepo)),
+        BlocProvider(create: (_) => SettingsBloc(settingsRepo: settingsRepo)),
         BlocProvider(create: (_) => AuthBloc(authRepo: authRepo)),
       ],
       child: const AppView(),
@@ -66,7 +67,11 @@ class _AppViewState extends State<AppView> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ThemeBloc, ThemeState>(
+    return BlocBuilder<SettingsBloc, SettingsState>(
+      buildWhen: (previousState, currentState) {
+        return previousState.language != currentState.language ||
+            previousState.themeMode != currentState.themeMode;
+      },
       builder: (context, state) {
         return MaterialApp(
             builder: (context, child) {
@@ -74,10 +79,10 @@ class _AppViewState extends State<AppView> with WidgetsBindingObserver {
                 listener: (context, state) {
                   switch (state.status) {
                     case AuthStatus.authenticated:
-                      Routes.navigateTo(Routes.homeRoute);
+                      Routes.navigateTo(Routes.homeRoute, clearStack: true);
                       break;
                     case AuthStatus.unauthenticated:
-                      Routes.navigateTo(Routes.loginRoute);
+                      Routes.navigateTo(Routes.loginRoute, clearStack: true);
                       break;
                     default:
                       break;
@@ -100,14 +105,15 @@ class _AppViewState extends State<AppView> with WidgetsBindingObserver {
               GlobalWidgetsLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,
             ],
-            supportedLocales: const [
-              Locale('en', ''), // English, no country code
-            ],
-            onGenerateTitle: (BuildContext context) =>
-                AppLocalizations.of(context)!.appTitle,
+            supportedLocales: supportedLocales,
+            onGenerateTitle: (BuildContext context) => 'Title here',
             theme: lightTheme,
             darkTheme: darkTheme,
             themeMode: state.themeMode,
+            locale: Locale.fromSubtags(
+              languageCode: state.language.languageCode,
+              scriptCode: state.language.scriptCode,
+            ),
             initialRoute: Routes.splashRoute,
             onGenerateRoute: (settings) {
               return routes.router
