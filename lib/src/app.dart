@@ -15,22 +15,11 @@ import 'route/routes.dart';
 
 /// The Widget that configures your application.
 class App extends StatelessWidget {
-  final AuthRepository authRepo = AuthRepository();
-  final SettingsRepository settingsRepo = SettingsRepository();
-
-  App({
-    Key? key,
-  }) : super(key: key);
+  const App({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (_) => SettingsBloc(settingsRepo: settingsRepo)),
-        BlocProvider(create: (_) => AuthBloc(authRepo: authRepo)),
-      ],
-      child: const AppView(),
-    );
+    return const AppView();
   }
 }
 
@@ -49,6 +38,9 @@ class _AppViewState extends State<AppView> with WidgetsBindingObserver {
   final botToastBuilder = BotToastInit();
   final Routes routes = Routes();
 
+  late AuthRepository authRepo;
+  late SettingsRepository settingsRepo;
+
   _AppViewState() {
     routes.setupRouter();
   }
@@ -57,6 +49,8 @@ class _AppViewState extends State<AppView> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance?.addObserver(this);
+    authRepo = AuthRepository();
+    settingsRepo = SettingsRepository();
   }
 
   @override
@@ -67,60 +61,66 @@ class _AppViewState extends State<AppView> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SettingsBloc, SettingsState>(
-      buildWhen: (previousState, currentState) {
-        return previousState.language != currentState.language ||
-            previousState.themeMode != currentState.themeMode;
-      },
-      builder: (context, state) {
-        return MaterialApp(
-            builder: (context, child) {
-              child = BlocListener<AuthBloc, AuthState>(
-                listener: (context, state) {
-                  switch (state.status) {
-                    case AuthStatus.authenticated:
-                      Routes.navigateTo(Routes.homeRoute, clearStack: true);
-                      break;
-                    case AuthStatus.unauthenticated:
-                      Routes.navigateTo(Routes.loginRoute, clearStack: true);
-                      break;
-                    default:
-                      break;
-                  }
-                },
-                child: child,
-              );
-              child = botToastBuilder(context, child);
-              return child;
-            },
-            navigatorKey: AppView.globalNavKey,
-            navigatorObservers: [
-              HeroController(),
-              BotToastNavigatorObserver(),
-            ],
-            restorationScopeId: 'app',
-            localizationsDelegates: const [
-              AppLocalizations.delegate,
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-            ],
-            supportedLocales: supportedLocales,
-            onGenerateTitle: (BuildContext context) => 'Title here',
-            theme: lightTheme,
-            darkTheme: darkTheme,
-            themeMode: state.themeMode,
-            locale: Locale.fromSubtags(
-              languageCode: state.language.languageCode,
-              scriptCode: state.language.scriptCode,
-            ),
-            initialRoute: Routes.splashRoute,
-            onGenerateRoute: (settings) {
-              return routes.router
-                  .matchRoute(context, settings.name, routeSettings: settings)
-                  .route;
-            });
-      },
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => SettingsBloc(settingsRepo: settingsRepo)),
+        BlocProvider(create: (_) => AuthBloc(authRepo: authRepo)),
+      ],
+      child: BlocBuilder<SettingsBloc, SettingsState>(
+        buildWhen: (previousState, currentState) {
+          return previousState.language != currentState.language ||
+              previousState.themeMode != currentState.themeMode;
+        },
+        builder: (context, state) {
+          return MaterialApp(
+              builder: (context, child) {
+                child = BlocListener<AuthBloc, AuthState>(
+                  listener: (context, state) {
+                    switch (state.status) {
+                      case AuthStatus.authenticated:
+                        Routes.navigateTo(Routes.homeRoute, clearStack: true);
+                        break;
+                      case AuthStatus.unauthenticated:
+                        Routes.navigateTo(Routes.loginRoute, clearStack: true);
+                        break;
+                      default:
+                        break;
+                    }
+                  },
+                  child: child,
+                );
+                child = botToastBuilder(context, child);
+                return child;
+              },
+              navigatorKey: AppView.globalNavKey,
+              navigatorObservers: [
+                HeroController(),
+                BotToastNavigatorObserver(),
+              ],
+              restorationScopeId: 'app',
+              localizationsDelegates: const [
+                AppLocalizations.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
+              supportedLocales: supportedLocales,
+              onGenerateTitle: (BuildContext context) => 'Title here',
+              theme: lightTheme,
+              darkTheme: darkTheme,
+              themeMode: state.themeMode,
+              locale: Locale.fromSubtags(
+                languageCode: state.language.languageCode,
+                scriptCode: state.language.scriptCode,
+              ),
+              initialRoute: Routes.splashRoute,
+              onGenerateRoute: (settings) {
+                return routes.router
+                    .matchRoute(context, settings.name, routeSettings: settings)
+                    .route;
+              });
+        },
+      ),
     );
   }
 }
