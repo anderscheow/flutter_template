@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter_template/src/constants/auth.dart';
-import 'package:flutter_template/src/repository/auth/auth_repository.dart';
+import 'package:flutter_template/src/constant/auth.dart';
+import 'package:flutter_template/src/repositories/auth/auth_repository.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';

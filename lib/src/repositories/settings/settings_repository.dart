@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_template/src/constants/preference_key.dart';
+import 'package:flutter_template/src/constant/preference_key.dart';
 import 'package:flutter_template/src/models/language.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

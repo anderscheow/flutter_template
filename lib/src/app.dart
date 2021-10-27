@@ -4,15 +4,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_template/src/bloc/settings/settings_bloc.dart';
-import 'package:flutter_template/src/constants/config.dart';
+import 'package:flutter_template/src/constant/config.dart';
 import 'package:flutter_template/src/styles/theme.dart';
 import 'package:kiwi/kiwi.dart';
 
 import 'bloc/auth/auth_bloc.dart';
-import 'constants/auth.dart';
-import 'constants/language.dart';
+import 'constant/auth.dart';
+import 'constant/language.dart';
 import 'di/di.dart';
-import 'route/routes.dart';
+import 'route/route.dart';
 
 /// The Widget that configures your application.
 class App extends StatelessWidget {

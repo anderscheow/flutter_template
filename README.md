@@ -13,7 +13,7 @@
     > Consists of base API config, request and response models.
 - bloc
     > Separate business logic from presentation layer
-- constants
+- constant
     > Consists of constant value or enum
 - di
     > Consists of dependency injection configuration
@@ -21,7 +21,7 @@
     > Keep track different language files
 - models
     > Data uses to communicate internally or externally
-- repository
+- repositories
     > Data layer between local storage and network calls
 - route
     > Helper class for routing
@@ -29,10 +29,24 @@
     > Presentation layer
 - styles
     > Consists of styling of the application
-- util
-    > Utilitiy or helper class
+- utils
+    > Utility or helper class
 
-</br>
+&nbsp;
+
+### Naming scheme
+```
+Naming for files and directories
+//this is the right method
+user_data.dart (lower case for both words separated by underscore)
+//these methods should be avoided
+userData.dart (camel case)
+UserData.dart (upper case for both words)
+Loginview.dart (upper case for first word)
+Login_View.dart (upper case for both words separated by underscore)
+```
+
+&nbsp;
 
 ## How to use this template?
 ### Create new repository
@@ -61,14 +75,14 @@
 4. Add new language to language list in file `language.dart` under `models` folder.
 5. Run `flutter gen-l10n` to generate files for localization.
 
-</br>
+&nbsp;
 
 ## Why BLoC instead of Clean?
 1. BLoC already built in observer pattern to observe for state or data change.
 2. Using dependency injection, repository can be injected into bloc and use directyly. No use case pattern is needed.
 3. In the presentation layer, use `BlocBuilder` on necessary widgets to listen for state or data change. Use `BlocListener` if action needs to be taken when state or data change.
 
-</br>
+&nbsp;
 
 ## When to regenerate .g.dart file?
 Whenever changes on files or adding new file with `@JsonSerializable` annotation, do run `flutter pub run build_runner build` to generate `.g.dart` files.

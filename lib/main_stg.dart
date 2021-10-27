@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_template/src/constants/config.dart';
+import 'package:flutter_template/src/constant/config.dart';
 import 'package:logging/logging.dart';
 
 import 'src/app.dart';

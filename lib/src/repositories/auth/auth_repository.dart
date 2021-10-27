@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter_template/src/constants/auth.dart';
+import 'package:flutter_template/src/constant/auth.dart';
 
 class AuthRepository {
   final _controller = StreamController<AuthStatus>();
@@ -19,7 +19,7 @@ class AuthRepository {
     // Todo: Save to preference
     await Future.delayed(
       const Duration(milliseconds: 300),
-          () => _controller.add(AuthStatus.authenticated),
+      () => _controller.add(AuthStatus.authenticated),
     );
   }
 

@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_template/src/api/api_client.dart';
-import 'package:flutter_template/src/constants/config.dart';
-import 'package:flutter_template/src/repository/auth/auth_repository.dart';
-import 'package:flutter_template/src/repository/settings/settings_repository.dart';
-import 'package:flutter_template/src/util/dio_logger_interceptor.dart';
+import 'package:flutter_template/src/constant/config.dart';
+import 'package:flutter_template/src/repositories/auth/auth_repository.dart';
+import 'package:flutter_template/src/repositories/settings/settings_repository.dart';
+import 'package:flutter_template/src/utils/dio_logger_interceptor.dart';
 import 'package:kiwi/kiwi.dart';
 
 void setupDI(IConfig config) {

@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter_template/src/constants/language.dart';
+import 'package:flutter_template/src/constant/language.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'language.g.dart';
