@@ -1,8 +1,10 @@
-import 'package:dart_json_mapper/dart_json_mapper.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_template/src/constants/language.dart';
+import 'package:json_annotation/json_annotation.dart';
 
-@jsonSerializable
+part 'language.g.dart';
+
+@JsonSerializable()
 class Language extends Equatable {
   final int id;
   final String name;
@@ -12,8 +14,12 @@ class Language extends Equatable {
   const Language(this.id, this.name, this.languageCode, this.scriptCode);
 
   @override
-  @JsonProperty(ignore: true)
+  @JsonKey(ignore: true)
   List<Object?> get props => [id, name, languageCode, scriptCode];
+
+  factory Language.fromJson(Map<String, dynamic> json) => _$LanguageFromJson(json);
+
+  Map<String, dynamic> toJson() => _$LanguageToJson(this);
 
   static Language get fallbackLanguage {
     return const Language(1, 'English', english, null);

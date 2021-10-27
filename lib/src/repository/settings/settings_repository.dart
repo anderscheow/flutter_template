@@ -1,6 +1,6 @@
 import 'dart:async';
+import 'dart:convert';
 
-import 'package:dart_json_mapper/dart_json_mapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_template/src/constants/preference_key.dart';
 import 'package:flutter_template/src/models/language.dart';
@@ -12,13 +12,13 @@ class SettingsRepository {
 
   Stream<Language> get language async* {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? json = prefs.getString(PreferenceKey.language);
-    Language? language = JsonMapper.deserialize(json);
+    String? jsonString = prefs.getString(PreferenceKey.language);
 
-    if (language != null) {
-      yield language;
-    } else {
+    if (jsonString == null) {
       yield Language.fallbackLanguage;
+    } else {
+      Language language = Language.fromJson(json.decode(jsonString));
+      yield language;
     }
 
     yield* _languageController.stream;
@@ -26,8 +26,8 @@ class SettingsRepository {
 
   Future<void> changeLanguage({required Language language}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String json = JsonMapper.serialize(language);
-    await prefs.setString(PreferenceKey.language, json);
+    String jsonString = json.encode(language.toJson());
+    await prefs.setString(PreferenceKey.language, jsonString);
     _languageController.add(language);
   }
 

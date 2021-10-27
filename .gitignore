@@ -47,3 +47,5 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 local.properties
+/android/.settings/
+/android/.project

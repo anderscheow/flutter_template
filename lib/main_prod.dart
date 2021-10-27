@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_template/src/constants/config.dart';
 import 'package:logging/logging.dart';
 
-import 'main_prod.mapper.g.dart' show initializeJsonMapper;
 import 'src/app.dart';
 
 void main() async {
@@ -13,7 +13,5 @@ void main() async {
     }
   });
 
-  initializeJsonMapper();
-
-  runApp(App());
+  runApp(App(config: ProdConfig()));
 }

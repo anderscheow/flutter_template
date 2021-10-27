@@ -4,30 +4,36 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_template/src/bloc/settings/settings_bloc.dart';
-import 'package:flutter_template/src/repository/settings/settings_repository.dart';
+import 'package:flutter_template/src/constants/config.dart';
 import 'package:flutter_template/src/styles/theme.dart';
+import 'package:kiwi/kiwi.dart';
 
 import 'bloc/auth/auth_bloc.dart';
 import 'constants/auth.dart';
 import 'constants/language.dart';
-import 'repository/auth/auth_repository.dart';
+import 'di/di.dart';
 import 'route/routes.dart';
 
 /// The Widget that configures your application.
 class App extends StatelessWidget {
-  const App({Key? key}) : super(key: key);
+  const App({Key? key, required this.config}) : super(key: key);
+
+  final IConfig config;
 
   @override
   Widget build(BuildContext context) {
-    return const AppView();
+    return AppView(config: config);
   }
 }
 
 class AppView extends StatefulWidget {
   static final globalNavKey = GlobalKey<NavigatorState>();
 
+  final IConfig config;
+
   const AppView({
     Key? key,
+    required this.config,
   }) : super(key: key);
 
   @override
@@ -38,19 +44,13 @@ class _AppViewState extends State<AppView> with WidgetsBindingObserver {
   final botToastBuilder = BotToastInit();
   final Routes routes = Routes();
 
-  late AuthRepository authRepo;
-  late SettingsRepository settingsRepo;
-
-  _AppViewState() {
-    routes.setupRouter();
-  }
+  final KiwiContainer container = KiwiContainer();
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance?.addObserver(this);
-    authRepo = AuthRepository();
-    settingsRepo = SettingsRepository();
+    _setup();
   }
 
   @override
@@ -63,8 +63,9 @@ class _AppViewState extends State<AppView> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) => SettingsBloc(settingsRepo: settingsRepo)),
-        BlocProvider(create: (_) => AuthBloc(authRepo: authRepo)),
+        BlocProvider(
+            create: (_) => SettingsBloc(settingsRepo: container.resolve())),
+        BlocProvider(create: (_) => AuthBloc(authRepo: container.resolve())),
       ],
       child: BlocBuilder<SettingsBloc, SettingsState>(
         buildWhen: (previousState, currentState) {
@@ -122,5 +123,10 @@ class _AppViewState extends State<AppView> with WidgetsBindingObserver {
         },
       ),
     );
+  }
+
+  void _setup() {
+    setupDI(widget.config);
+    routes.setupRouter();
   }
 }
