@@ -11,7 +11,7 @@ part 'settings_state.dart';
 
 class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
   SettingsBloc({
-    required SettingsRepository settingsRepo,
+    required ISettingsRepository settingsRepo,
   })  : _settingsRepo = settingsRepo,
         super(SettingsState.defaultState()) {
     _languageSubscription = _settingsRepo.language.listen(
@@ -23,7 +23,7 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     );
   }
 
-  final SettingsRepository _settingsRepo;
+  final ISettingsRepository _settingsRepo;
   late StreamSubscription<Language> _languageSubscription;
   late StreamSubscription<ThemeMode> _themeSubscription;
 

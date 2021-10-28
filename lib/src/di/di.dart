@@ -21,6 +21,6 @@ void setupDI(IConfig config) {
   ApiClient apiClient = ApiClient(dio, baseUrl: config.getBaseUrl());
   container.registerInstance(apiClient);
 
-  container.registerInstance(AuthRepository());
-  container.registerInstance(SettingsRepository());
+  container.registerInstance<IAuthRepository>(AuthRepository(apiClient: container.resolve()));
+  container.registerInstance<ISettingsRepository>(SettingsRepository(apiClient: container.resolve()));
 }

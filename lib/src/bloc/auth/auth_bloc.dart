@@ -10,7 +10,7 @@ part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc({
-    required AuthRepository authRepo,
+    required IAuthRepository authRepo,
   })  : _authRepo = authRepo,
         super(const AuthState.unknown()) {
     _authenticationStatusSubscription = _authRepo.status.listen(
@@ -18,7 +18,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     );
   }
 
-  final AuthRepository _authRepo;
+  final IAuthRepository _authRepo;
   late StreamSubscription<AuthStatus> _authenticationStatusSubscription;
 
   @override
