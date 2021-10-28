@@ -1,6 +1,6 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_template/src/screens/login/home.dart';
+import 'package:flutter_template/src/screens/login/login.dart';
 
 import '../app.dart';
 

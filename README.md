@@ -34,20 +34,6 @@
 
 &nbsp;
 
-### Naming scheme
-```
-Naming for files and directories
-//this is the right method
-user_data.dart (lower case for both words separated by underscore)
-//these methods should be avoided
-userData.dart (camel case)
-UserData.dart (upper case for both words)
-Loginview.dart (upper case for first word)
-Login_View.dart (upper case for both words separated by underscore)
-```
-
-&nbsp;
-
 ## How to use this template?
 ### Create new repository
 1. Create a new folder under `repository` folder.
